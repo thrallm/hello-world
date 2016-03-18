@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Cellular automaton</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script type="text/javascript">
+	//Google Analytics
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-29507409-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+	
+</head>
+<body>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+	<table class='center'>
+		<tr>
+			<td style='vertical-align:middle'><h1>Cellular automaton</h1></td>
+			</tr><tr>
+			<td>
+				<canvas id='myCanvas' width='w.widthadjust;' height='w.heightadjust;'></canvas></br>
+			</td>
+			<td>
+				<h4>generation options</h4>
+				generation length (ms)
+				<input type='number' id='speed' value='50' min='1'/></br>
+				<span id='out'></span></br>
+				<h4>rule options</h4>
+				cells are <b>Born</b> if they have <input type='number' id='deadrule1' min='0' max='8' value='3'/> or
+				<input type='number' id='deadrule2' min='0' max='8' value='3'/> neighbors</br>
+				live cells <b>Stay</b> alive if they have <input type='number' id='liverule1' min='0' max='8' value='3'/> or
+				<input type='number' id='liverule2' min='0' max='8' value='2'/> neighbours</br>
+				Stay alive should be smaller than born for any generators to survive.
+				<h4>reset options</h4>
+				cell size(px)<input type='number' id='cellsize' min='1' value='6'/>
+				(smaller cells will run slower)</br>
+				<select id='presets'>
+					<optgroup label='preset shapes'>
+						<option>blockLayingEngine</option>
+						<option selected='selected'>The R-pentomino</option>
+						<option>glider</option>
+						<option>toad</option>
+						<option>blinker</option>
+						<option>randomDisbersement</option>
+					</optgroup>
+				</select>
+				<input type='button' value='reset' id='reset'/>
+				<h4>display options</h4>
+				display options don't update until a frame is animated.</br>
+				grid and invert will run slower.</br>
+				<input type='color' id='color' value='#000000'/></br>
+				grid<input type='checkbox' id='gridCheckbox'></br>
+				invert<input type='checkbox' id='invertCheckbox'></br>
+				<form>
+				<h4>fading options</h4>
+				(wont work with invert)</br>
+				no fading<input type='radio' checked name='agemod' id='noAgeModCheckbox'></br>
+				fade old squares<input type='radio' name='agemod' id='fadestaticCheckbox'></br>
+				darken old squares<input type='radio' name='agemod' id='darkerAgeCheckbox'>
+				</form>
+				<span id='out2'></span>
+				<h4>play options</h4>
+				<input type='button' id='play' value='play' class='green'/>
+				<input type='button' value='next generation' id='next'/>
+				<span id='out3'></span>
+			</td>
+		</tr>
+	</table>
+	<script src='js/jquery-1.10.2.min.js'></script>
+	<script src='js/conway.js'></script>
+</body>
+</html>

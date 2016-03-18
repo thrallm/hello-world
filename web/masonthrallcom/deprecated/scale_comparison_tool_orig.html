@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      h1 { height: 100%; margin: 0; padding: 0; color:#363032; text-align:left; font-family:"Droid Sans", sans-serif; font-size:30px; }
+      p { height: 100%; margin: 0; padding: 0; color:#363032; text-align:left; font-family:"Droid Sans", sans-serif; font-size:12px; }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCi8sodOVZyXx6B0urxvTy12AP1QJjNxT8&sensor=false"></script>
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+    <script type="text/javascript">
+        function startMap(map_canvas,lat,lng) {
+	  var zombieStyles = [
+	  {
+	    featureType: "all",
+	    elementType: "geometry",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	  },
+	  {
+	    featureType: "all",
+	    elementType: "labels",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	   },
+	   {
+	      featureType: "water",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' }
+	      ]
+	    },
+	   {
+	      featureType: "landscape.man_made",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -100 }
+	      ]
+	    }
+	  ];
+	  
+	  var parkStyles = [
+	  {
+	    featureType: "all",
+	    elementType: "geometry",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	  },
+	  {
+	    featureType: "all",
+	    elementType: "labels",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	   },
+	   {
+	      featureType: "water",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' }
+	      ]
+	    },
+	   {
+	      featureType: "poi.park",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -20 }
+	      ]
+	    },
+	   {
+	      featureType: "landscape.man_made",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -100 }
+	      ]
+	    }
+	  ];
+	  
+	  var roadStyles = [
+	  {
+	    featureType: "all",
+	    elementType: "geometry",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	  },
+	  {
+	    featureType: "all",
+	    elementType: "labels",
+	    stylers: [
+	      { visibility: 'off' }
+	    ]
+	   },
+	   {
+	      featureType: "water",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' }
+	      ]
+	    },
+	   {
+	      featureType: "poi.park",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -20 }
+	      ]
+	    },
+	   {
+	      featureType: "road.local",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: 0 },
+		{ hue: "#F6FF00" },
+		{ saturation: 0 }
+	      ]
+	    },
+	   {
+	      featureType: "road.arterial",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -10 },
+		{ saturation: -60 }
+	      ]
+	    },
+	   {
+	      featureType: "road.highway",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -10 },
+		{ saturation: -60 },
+	      ]
+	    },	    
+	   {
+	      featureType: "landscape.man_made",
+	      elementType: "geometry",
+	      stylers: [
+	        { visibility: 'on' },
+		{ lightness: -100 }
+	      ]
+	    },
+	  ];
+	  
+	  var crazyStyles = [
+	  {
+	    stylers: [
+	      { visibility: "off" }
+	    ]
+	  },
+	  {
+	    elementType: "geometry",
+	    stylers: [
+	      { visibility: "on" },
+	      { invert_lightness: true },
+	      { hue: "#3bff00" }
+	    ]
+	  }
+	]
+	  
+	  var zombieMapType = new google.maps.StyledMapType(zombieStyles, {name: "figure ground"});
+	  var parkMapType = new google.maps.StyledMapType(parkStyles, {name: "with parks"});
+	  var roadMapType = new google.maps.StyledMapType(roadStyles, {name: "and roads"});
+	  var crazyMapType = new google.maps.StyledMapType(crazyStyles, {name: "green"});
+
+	  var mapOptions = {
+	    zoom: parseInt(document.getElementById('zoomlevel').innerHTML),
+	    center: new google.maps.LatLng(lat,lng),
+	    //disableDefaultUI: true,
+	    zoomControl: false,
+	    panControl: false,
+	    mapTypeControlOptions: {
+	      mapTypeIds: ['zombie0', 'parks', 'roads', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
+	    }
+	};
+	var map = new google.maps.Map(document.getElementById(map_canvas), mapOptions);
+	map.mapTypes.set('zombie0', zombieMapType);
+	map.mapTypes.set('parks', parkMapType);
+	map.mapTypes.set('roads', roadMapType);
+	map.mapTypes.set('crazy', crazyMapType);
+	map.setMapTypeId('zombie0');
+	//map.setOptions({styles: zombieStyles});
+	//var overlay = new google.maps.KmlLayer("http://dl.dropbox.com/u/18063657/city_sizes/CityOutlines.kml", {preserveViewport: true}); 
+	//overlay.setMap(map);
+	return map;
+	}
+	
+	function initialize() {
+	  geocoder = new google.maps.Geocoder();
+	  map0 = startMap("map_canvas0",39.7391536007426,-104.98470339855373);
+	  map1 = startMap("map_canvas1",37.77492950021904,-122.41941550062131);
+	  codeAddress(map0,'address0');
+	  codeAddress(map1,'address1');
+	  map1.setOptions({disableDoubleClickZoom: true,scrollwheel: false});
+	  google.maps.event.addListener(map0, 'zoom_changed', function() {
+	    var newzoom0=map0.getZoom();
+	    document.getElementById('zoomlevel').innerHTML=newzoom0;
+	    map1.setZoom(newzoom0);
+	  });
+	  google.maps.event.addListener(map0, 'maptypeid_changed', function() {
+	    var x = map0.getMapTypeId();
+	    map1.setMapTypeId(x);
+	  });
+	}
+	
+	function codeAddress(map,a) {
+	  var address = document.getElementById(a).value;
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	  if (status == google.maps.GeocoderStatus.OK) {
+	    map.setCenter(results[0].geometry.location);
+	  } else {
+	    alert("Geocode was not successful for the following reason: " + status);
+	  }
+	  });
+	}
+    </script>
+     <title>Scale Comparison Tool</title>
+     <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29507409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </head>
+  <body onload="initialize()">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+    <div style="position:absolute; left: 0%; top: 0px" >
+    <h1>Scale Comparison Tool</h1>
+    <p>compare two map windows which stay at the same zoom level</p>
+    </div>
+    <div style="position:absolute; left: 0%; top: 55px" >
+    <input type="text" id="address0" onClick="" value="denver" />
+    <input type="button" onClick="codeAddress(map0,'address0')" value="go" />
+    </div>
+    <div style="position:absolute; left: 51%; top: 55px" >
+    <input type="text" id="address1" onClick="" value="rome" />
+    <input type="button" onClick="codeAddress(map1,'address1')" value="go" />
+    </div>
+    <div id='zoomlevel' style="position:absolute; left:97%; top: 0px">10</div>
+    <div id="map_canvas0" style="position:absolute; left:0px; top:80px; width:49%; height:700px"></div>
+    <div id="map_canvas1" style="position:absolute; left:51%; top:80px; width:49%; height:700px"></div>
+  </body>
+</html>

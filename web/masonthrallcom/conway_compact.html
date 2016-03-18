@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Cellular automaton</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script type="text/javascript">
+	//Google Analytics
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-29507409-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+</head>
+<body>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+	<h1>Cellular automaton</h1>
+	<table>
+		<tr>
+			<td>
+				<canvas id='myCanvas' width='160' height='160'></canvas></br>
+				<input type='button' id='play' value='play' class='green'/>
+				<input type='button' value='next generation' id='next'/>
+				<span id='out3'></span>
+			</td>
+			<td>
+				<h4>generation options</h4>
+				generation length (ms)
+				<input type='number' id='speed' value='50' min='1'/></br>
+				<span id='out'></span></br>
+				<h4>rule options</h4>
+				cell are <b>Born</b> if they have <input type='number' id='deadrule1' min='0' max='8' value='3'/> or
+				<input type='number' id='deadrule2' min='0' max='8' value='3'/> neighbors</br>
+				live cell <b>Stay</b> alive if they have <input type='number' id='liverule1' min='0' max='8' value='3'/> or
+				<input type='number' id='liverule2' min='0' max='8' value='2'/> neighbours</br>
+				Stay alive should be smaller than born for any generators to survive.
+				<h4>reset options</h4>
+				cell size(px)<input type='number' id='cellsize' min='1' value='6'/>
+				(smaller cells will run slower)</br>
+				canvas size(px)<input type='number' id='canvassize' min='200' max='1200' value='600'/>
+				(larger canvas will run slower)</br>
+				<select id='presets'>
+					<optgroup label='preset shapes'>
+						<option>blockLayingEngine</option>
+						<option selected='selected'>The R-pentomino</option>
+						<option>glider</option>
+						<option>toad</option>
+						<option>blinker</option>
+						<option>randomDisbersement</option>
+					</optgroup>
+				</select>
+				<input type='button' value='reset' id='reset'/>
+				<h4>display options</h4>
+				display options don't update until a frame is animated.</br>
+				grid and invert will run slower.</br>
+				<input type='color' id='color' value='#000000'/></br>
+				grid<input type='checkbox' id='gridCheckbox'></br>
+				invert<input type='checkbox' id='invertCheckbox'></br>
+				<form>
+				<h4>fading options</h4>
+				(wont work with invert)</br>
+				no fading<input type='radio' checked name='agemod' id='noAgeModCheckbox'></br>
+				fade old squares<input type='radio' name='agemod' id='fadestaticCheckbox'></br>
+				darken old squares<input type='radio' name='agemod' id='darkerAgeCheckbox'>
+				</form>
+				<span id='out2'></span></br></br>
+			</td>
+		</tr>
+	</table>
+    <script src='js/jquery-1.10.2.min.js'></script>
+	<script>
+	function limit(b,a){return 10*b<a?10*b:a}
+function drawCell(b,a,d){!1==$("#invertCheckbox")[0].checked?1==b[0]?($("#fadestaticCheckbox")[0].checked?w.ctx.fillStyle=shadeColor($("#color")[0].value,limit(b[1],60)):$("#darkerAgeCheckbox")[0].checked?(light=shadeColor($("#color")[0].value,60),w.ctx.fillStyle=shadeColor(light,-10*b[1])):$("#noAgeModCheckbox")[0].checked&&(w.ctx.fillStyle=$("#color")[0].value),w.ctx.fillRect(w.cell*a,w.cell*d,w.cell,w.cell)):$("#gridCheckbox")[0].checked&&w.ctx.strokeRect(w.cell*a,w.cell*d,w.cell,w.cell):0==b[0]?
+w.ctx.fillRect(w.cell*a,w.cell*d,w.cell,w.cell):$("#gridCheckbox")[0].checked&&w.ctx.strokeRect(w.cell*a,w.cell*d,w.cell,w.cell)}function shadeColor(b,a){var d=parseInt(b.slice(1),16),c=Math.round(2.55*a),e=(d>>16)+c,f=(d>>8&255)+c,d=(d&255)+c;return"#"+(16777216+65536*(255>e?1>e?0:e:255)+256*(255>f?1>f?0:f:255)+(255>d?1>d?0:d:255)).toString(16).slice(1)}
+function updateGrid(b,a,d){w.play&&(w.canvas.width=w.cell*w.cellcount,w.canvas.height=w.cell*w.cellcount);w.ctx.strokeStyle="#E4E4E4";w.ctx.fillStyle=$("#color")[0].value;w.time&&(newtime=(new Date).getTime(),generationtime=Math.round(1E3/(newtime-w.time)),w.time=newtime,$("#out3").html("FPS : "+generationtime));var c=[];w.lastarray=b;$.each(b,function(a,f){c[a]=[];var h=b[a+1],k=b[a],l=b[a-1];$.each(b[a],function(b,f){if(!0==d)drawCell(f,a,b);else if(w.play){drawCell(f,a,b);var g=checkNeighbors(h,
+k,l,a,b,w.cellcount);1==f[0]?g==$("#liverule1")[0].value||g==$("#liverule2")[0].value?(x=f[1]+1,c[a][b]=[1,x]):c[a][b]=[0,0]:0==f[0]&&(g==$("#deadrule1")[0].value||g==$("#deadrule2")[0].value?c[a][b]=[1,1]:c[a][b]=[0,0])}})});w.play&&(w.generations++,$("#out").html("generations : "+generations),w.newmain=c,w.requestAnimFrame(function(){updateGrid(w.newmain,w.cellcount,!1)}))}
+function checkNeighbors(b,a,d,c,e,f){return 0<c&&c<f-1&&0<e&&e<f-1?(c=0+d[e-1][0],c+=d[e][0],c+=d[e+1][0],c+=a[e-1][0],c+=a[e+1][0],c+=b[e-1][0],c+=b[e][0],c+=b[e+1][0]):!1}function emptyGrid(){w.initarray=Array(w.cellcount);$.each(w.initarray,function(b,a){w.initarray[b]=Array(w.cellcount);$.each(w.initarray[b],function(a,c){w.initarray[b][a]=[0,0]})})}
+function blockLayingEngine(b){var a=Math.round(w.cellcount/2)-3;b[1+a][1+a]=[1,1];b[2+a][1+a]=[1,1];b[3+a][1+a]=[1,1];b[5+a][1+a]=[1,1];b[1+a][2+a]=[1,1];b[4+a][3+a]=[1,1];b[5+a][3+a]=[1,1];b[2+a][4+a]=[1,1];b[3+a][4+a]=[1,1];b[5+a][4+a]=[1,1];b[1+a][5+a]=[1,1];b[3+a][5+a]=[1,1];b[5+a][5+a]=[1,1]}function glider(b){var a=Math.round(w.cellcount/2)-3;b[1+a][3+a]=[1,1];b[2+a][3+a]=[1,1];b[3+a][3+a]=[1,1];b[3+a][2+a]=[1,1];b[2+a][1+a]=[1,1]}
+function toad(b){var a=Math.round(w.cellcount/2)-3;b[3+a][3+a]=[1,1];b[3+a][2+a]=[1,1];b[2+a][2+a]=[1,1];b[2+a][3+a]=[1,1];b[1+a][2+a]=[1,1];b[4+a][3+a]=[1,1]}function blinker(b){var a=Math.round(w.cellcount/2)-3;b[3+a][3+a]=[1,1];b[3+a][2+a]=[1,1];b[3+a][1+a]=[1,1]}function Rpentomino(b){var a=Math.round(w.cellcount/2)-3;b[2+a][1+a]=[1,1];b[3+a][1+a]=[1,1];b[1+a][2+a]=[1,1];b[2+a][2+a]=[1,1];b[2+a][3+a]=[1,1]}
+function randomDisbersement(b){$.each(b,function(a,d){$.each(b,function(c,d){alive=Math.round(Math.random());b[a][c]=[alive,alive]})})}
+function initGrid(){w.generations=0;playState(!0);selpreset=$("#presets")[0].selectedIndex;w.cell=$("#cellsize")[0].value;w.cellcount=Math.round($("#canvassize")[0].value/w.cell);emptyGrid();0==selpreset?blockLayingEngine(w.initarray):1==selpreset?Rpentomino(w.initarray):2==selpreset?glider(w.initarray):3==selpreset?toad(w.initarray):4==selpreset?blinker(w.initarray):5==selpreset&&randomDisbersement(w.initarray);updateGrid(w.initarray,w.cell,w.cellcount,!0);playState(!1)}
+function playState(b){b?(w.playbutton.className="red",w.playbutton.value="pause",w.play=!0):(w.playbutton.className="green",w.playbutton.value="play",w.play=!1)}function initGlobals(){w=window;w.canvas=$("#myCanvas")[0];w.time=(new Date).getTime();w.playbutton=$("#play")[0];w.nextbutton=$("#next")[0];w.resetbutton=$("#reset")[0];w.cell=$("#cellsize")[0].value;w.ctx=w.canvas.getContext("2d");w.requestAnimFrame=function(b){return function(a){w.setTimeout(a,$("#speed")[0].value)}}();initGrid()}$(document).ready(initGlobals());
+w.playbutton.addEventListener("click",function(){w.play=!w.play;w.play?(updateGrid(w.newmain,w.cell,w.cellcount,!1),playState(!0)):playState(!1)});w.nextbutton.addEventListener("click",function(){playState(!0);updateGrid(w.newmain,w.cell,w.cellcount,!0);playState(!1)});w.resetbutton.addEventListener("click",function(){temp=w.play;initGrid();playState(temp)});
+	</script>
+</body>
+</html>

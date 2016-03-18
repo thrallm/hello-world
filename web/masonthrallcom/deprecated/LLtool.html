@@ -1,0 +1,241 @@
+<html>
+  <head>
+    <title>lat long finder</title>
+    <style>
+    .red {color:red;}
+    </style>
+    <!--<script src="http://www.google.com/jsapi?key=ABQIAAAA60dvsmc6uOZwNNduDOSIzhShWeRNaRJ-cQVIUUwaC0qfIBg60RTPXwRqWDpmDYluVOh2xJ1F9gAnXA"></script>-->
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+google.load("earth", "1");
+google.load("maps", "2.99");
+var ge = null;
+var geocoder = null;
+var currentKmlObjects = {
+  'DarkEarth': null
+};
+
+function init() {
+  google.earth.createInstance("map3d", initCallback, failureCallback,{ database: 'http://kh.google.com'});
+  geocoder = new google.maps.ClientGeocoder();
+}
+
+function initCallback(object) {
+  ge = object;
+  ge.getOptions().setBuildingSelectionEnabled(true);
+  ge.getWindow().setVisibility(true);
+  ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, true);
+  ge.getOptions().setAtmosphereVisibility(true);
+  document.getElementById("location").value="";
+  document.getElementById("modelid").value="";
+  var la = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+  var lat = la.getLatitude();
+  var lon = la.getLongitude();
+  var tilt = la.getTilt();
+  var heading = la.getHeading();
+  var range = la.getRange();
+  var altitude = la.getAltitude();
+  var groundaltitude = ge.getGlobe().getGroundAltitude(lat,lon);
+  document.getElementById('displayspot').value=lat;
+  document.getElementById('displayspot2').value=lon;
+  document.getElementById('displayspot3').value=lat+","+lon;
+  document.getElementById('displayspot4').value=groundaltitude;
+  document.getElementById('displayspot5').value=lat+" "+lon;
+  document.getElementById('displayspot6').value=groundaltitude*3.2808399;
+  document.getElementById('displayspot7').value="http://sketchup.google.com/3dwarehouse/search?q=near%3A"+lat+","+lon+"+within%3A"+50+"&styp=m&btnG=Search";
+  //options
+  document.getElementById('show_buildings').checked=true;
+  document.getElementById('clickable_buildings').checked=true;
+  document.getElementById('highlight_buildings').checked=true;
+  document.getElementById('show_labels').checked=true;
+  document.getElementById("show_DarkEarth").checked=false;
+  show_buildings();
+  clickable_buildings();
+  highlight_buildings();
+  show_labels();
+
+  var screenOverlay=ge.createScreenOverlay('');
+  screenOverlay.setIcon(ge.createIcon(''));
+  screenOverlay.getIcon().setHref("http://masonthrall.com/images/4.png");
+  ge.getFeatures().appendChild(screenOverlay);
+
+  google.earth.addEventListener(ge.getView(), 'viewchange', function() {
+    var la = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+    var lat = la.getLatitude();
+    var lon = la.getLongitude();
+    var altitude = ge.getGlobe().getGroundAltitude(lat,lon);
+    document.getElementById('displayspot').value=lat;
+    document.getElementById('displayspot2').value=lon;
+    document.getElementById('displayspot3').value=lat+","+lon;
+    document.getElementById('displayspot5').value=lat+" "+lon;
+    document.getElementById('displayspot4').value=altitude;
+    document.getElementById('displayspot6').value=altitude*3.2808399;
+    document.getElementById('displayspot7').innerHTML="<a target='_blank' href=\'http://sketchup.google.com/3dwarehouse/search?q=near%3A"+lat+","+lon+"+within%3A"+50+"&styp=m&btnG=Search\'>Search 3D Warehouse here</a>";
+    document.getElementById('displayspot8').innerHTML="<a target='_blank' href=\'http://sketchup.google.com/3dwarehouse/buildingmaker?ll="+lat+","+lon+"'>Model here in Building Maker</a>";
+});
+}
+
+function failureCallback(object) {
+}
+
+function submitLocation() {
+  var address = document.getElementById('location').value;
+  latL=geocoder.getLatLng(address);
+  goThere(latL);
+}
+
+function toggleKml(file,ext) {
+  // remove the old KML object if it exists
+  if (currentKmlObjects[file]) {
+    ge.getFeatures().removeChild(currentKmlObjects[file]);
+    currentKmlObject = null;
+  }
+  // if the checkbox is checked, fetch the KML and show it on Earth
+  var kmlCheckbox = document.getElementById('show_' + file);
+  if (kmlCheckbox.checked)
+    loadKml(file,ext);
+}
+
+function loadKml(file,ext) {
+  var kmlUrl = 'http://masonthrall.com/files/'+file+'.'+ext;
+  // fetch the KML
+  google.earth.fetchKml(ge, kmlUrl, function(kmlObject) {
+    // NOTE: we still have access to the 'file' variable (via JS closures)
+    if (kmlObject) {
+      // show it on Earth
+      currentKmlObjects[file] = kmlObject;
+      ge.getFeatures().appendChild(kmlObject);
+    } else {
+      // bad KML
+      currentKmlObjects[file] = null;
+      // wrap alerts in API callbacks and event handlers
+      // in a setTimeout to prevent deadlock in some browsers
+      setTimeout(function() {
+        alert('Bad or null KML.');
+      }, 0);
+      // uncheck the box
+      document.getElementById('kml-' + file + '-check').checked = '';
+    }
+  });
+}
+
+
+function goThere(point) {
+   var geocodeLocation = document.getElementById('location').value;
+   var geocoder = new google.maps.ClientGeocoder();
+ geocoder.getLatLng(geocodeLocation, function(point) {
+   if (point) {
+     var lookAt = ge.createLookAt('');
+     lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND,
+                0, 0, 2000);
+     ge.getView().setAbstractView(lookAt);
+   }
+ });
+}
+
+function goToModel() {
+  var link = ge.createLink('');
+  var modelid=document.getElementById('modelid').value;
+  if (modelid.split(".").reverse()[0]=="kml"){href=modelid;}
+  else {
+    if (modelid.substring(0,1)=="h"){urlarray1=modelid.split("=");urlarray2=urlarray1[1].split("&");modelid1=urlarray2[0];}
+    else {modelid1=modelid;}
+    var href = 'http://sketchup.google.com/3dwarehouse/download?mid=' + modelid1 + '&rtyp=k2';
+	}
+  link.setHref(href);
+  var networkLink = ge.createNetworkLink('');
+  networkLink.set(link, true, true);
+  ge.getFeatures().appendChild(networkLink);
+}
+
+function show_buildings() {
+      if (document.getElementById('show_buildings').checked) {
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, true);
+        ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, true);
+	document.getElementById('clickable_buildings').disabled=false;
+	document.getElementById('highlight_buildings').disabled=false;
+      } else {
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, false);
+        ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, false);
+	document.getElementById('clickable_buildings').disabled=true;
+	document.getElementById('highlight_buildings').disabled=true;
+      }
+}
+
+function clickable_buildings() {
+      if (document.getElementById('clickable_buildings').checked) {
+        ge.getOptions().setBuildingSelectionEnabled(true);
+	document.getElementById('highlight_buildings').disabled=false;
+      } else {
+        ge.getOptions().setBuildingSelectionEnabled(false);
+	document.getElementById('highlight_buildings').disabled=true;
+      }
+}
+
+function highlight_buildings() {
+      if (document.getElementById('highlight_buildings').checked) {
+        ge.getOptions().setBuildingHighlightingEnabled(true);
+      } else {
+        ge.getOptions().setBuildingHighlightingEnabled(false);
+      }
+}
+
+function show_labels() {
+      if (document.getElementById('show_labels').checked) {
+        ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+      } else {
+        ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, false);
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, false);
+      }
+}
+  </script>
+  </head>
+  <body onload='init()';>
+  <table style="color:#696969; font:italic 10px arial,serif;">
+  <tr><td>
+    <form id='geocoder_Form' action='javascript:submitLocation()' method='get'>
+    <input type='text' id='location'/>
+    <input type='button' onclick='submitLocation()' value='search'/>
+    </form></td><td>
+    <form id='modelloaderform' action='javascript:goToModel()' method='get'>
+    <input type='text' id='modelid'/>
+    <input type='button' value='3DW|kml' onclick='goToModel()'>
+    </form></td><td>
+    </td>
+    <tr><td>
+    </td><td>
+    </td><td>
+    </td></tr>
+    <tr><td>
+    </td><td>
+    </td><td>
+    </td></tr>
+    </table>
+    <div id='map3d_container' style='border: 1px solid silver; height: 600px; width: 800px; position:absolute;top:64px; left:15px;' >
+      <div id='map3d' style='height: 100%'></div>
+    </div>
+    <div id='options_panel' style='position:absolute;top:60px; left:850px;color:#696969; font:italic 10px arial,serif'>
+	<input type='checkbox' onclick='show_buildings()' value='show_buildings' id='show_buildings'><label for="show_buildings">show buildings</label>
+	<br/>
+	<input type='checkbox' onclick='clickable_buildings()' value='clickable_buildings' id='clickable_buildings'><label for="clickable_buildings">clickable buildings</label>
+	<br/>
+	<input type='checkbox' onclick='highlight_buildings()' value='highlight_buildings' id='highlight_buildings'><label for="highlight_buildings">highlight buildings</label>
+	<br/>
+	<br/>
+	<input type='checkbox' onclick='show_labels()' value='show_labels' id='show_labels'><label for="show_labels">labels</label>
+	<br/>
+	<input type='checkbox' onclick="toggleKml('DarkEarth','kmz')" value='show_darkearth' id='show_DarkEarth'><label for="show_darkearth">darkearth</label>
+	<br/>
+	<br/>
+	lat:  <input type="text" id='displayspot' width='180'></input><br/>
+          long:  <input type="text" id='displayspot2'></input><br/>
+          height (m):  <input type="text" id='displayspot4'></input><br/>  
+          height (ft):  <input type="text" id='displayspot6'></input><br/>
+          lat,long:  <input type="text" id='displayspot3' size='40'></input><br/> 
+          lat long sans comma:  <input type="text" id='displayspot5' size='40'></input><br/><br/>
+         <div id='displayspot7'>Search 3D Warehouse here</div>
+         <div id='displayspot8'>Model here in Building Maker</div>
+     </div>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 10px;
+	word-wrap: break-word;
+}
+input[type='button']
+{
+	border-radius: 2px;
+}
+.genbutton
+{
+	background-color: lightgreen;
+}
+div
+{
+	border: 1px solid gray;
+	border-collapse:collapse;
+	padding: 4px;
+	width: 95%;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius: 7px;
+}
+.nobox
+{
+	border: none;
+}
+table
+{
+	border-collapse:collapse;
+	padding: 0px;
+}
+canvas
+{
+	padding: 0px;
+}
+td
+{
+	border-collapse:collapse;
+	padding: 0px;
+	border: 1px solid gray;
+}
+.active
+{
+	background-color: lightgreen;
+}
+.inactive
+{
+	background-color: #dcedcf;
+}
+.generator
+{
+	background-color: lightgray;
+	border: 2px solid gray;
+}
+.app
+{
+	width: 50%;
+	background-color: lightgray;
+}

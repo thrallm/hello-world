@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>song seeds</title>
+<link rel="stylesheet" type="text/css" href="css/songseeds.css"/>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-29507409-1', 'masonthrall.com');
+  ga('send', 'pageview');
+
+</script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script src='js/riffwave.js'></script>
+<script src='js/shadecolor2.js'></script>
+<script src='js/underscore-min.js'></script>
+<script src='js/chance.min.js'></script>
+<script src='js/notedict.js'></script>
+<script src='js/scales.js'></script>
+<script src='js/vexflow-min.js'></script>
+<script src='js/rgbcolor.js'></script>
+<script src='js/songseeds.js'></script>
+</head>
+<body>
+<div class='app'>
+<canvas id='treecanvas' width=800></canvas>
+<div class='nobox'>
+<h2>song seeds</h2>
+Automatically generate notes within a scale and play them.</br>
+Evolve additional tracks which will compliment the initial seed when played together.</br>
+</div>
+<div class='generator'>
+</br>
+<div class='nobox'>
+There is no way to save (yet), so enjoy your temporary song.
+</div>
+<div id='seedoptions'>
+<input type='text' id='seed' value='c/4'/>note (note/octave)</br>
+<select id='scalepicker'><option>pick a scale</option></select></br>
+<b>seed options</b></br>
+<input type='number' id='notecount' value='4' min='1' max=''/>beats</br>
+<input type='number' id='seconds' min='0.0' max='4.0' step ='0.1' value='0.5'/>note length (seconds)</div>
+<div class='nobox'>
+<input type='button' onclick='GenerateRiff()' class='genbutton' value='GenerateSeed' id='generatebutton'/>
+<input type='checkbox' checked id='replace' onchange='ToggleOptions(this.checked);'/>new seed
+<input type='range' id='maxchangehalfsteps' min='0' max='12' value='6'/>max halfstep change</br>
+</div>
+<div id='generationoptions'>
+<input type='number' id='octavejump' min='-8' max='8' value='0'/>octave jump 
+<input type='number' min='-1' max='1' step='1' id='pitchtrend' onchange='PlusTrend(this,"#octavejump");' value=1 />evolve higher or lower tones?</br>
+<b>generation options</b></br>
+<input type='number' id='divider' value='1' min='0.000' max='32.000' step='.0125'/>multiplier 
+<input type='number' min='-1' max='1' step='1' id='speedtrend' onchange='MultiplyTrend(this,"#divider");' value=1 />evolve longer or shorter notes?</br>
+<input type='number' id='notechance' value=.75 min=0 max=1 step=.125 />note chance</br>
+<input type='checkbox' id='walk' hidden/>
+<input type='button' class='genbutton' onclick='ContinualEvolve()' value='StopEvolving' id='continualevolve'/>
+<input type='number' id='lifetime' value=4 />evolution speed</br>
+</div>
+</br>
+</div>
+</br>
+<div id='songparent' class='generator'>
+<input type='button' onclick='PlayRiff()' value='Play'/>
+<input type='button' onclick='StopRiff()' value='Stop'/>
+<input type='button' onclick='RandomSubset()' value='PlayRandomSubset'/>
+<div class='nobox'><h3 id='songname'>generate a seed above</h3></div>
+<div id='songdata'></div>
+</br>
+</div>
+<div class='nobox'>
+thanks to:</br>
+<a href='http://www.phy.mtu.edu/~suits/notefreqs.html'>http://www.phy.mtu.edu/~suits/notefreqs.html</a></br>
+<a href='http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html'>http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html</a></br>
+jquery.js, riffwave.js, underscore.js, chance.js, vexflow.js
+</div>
+</div>
+</body>
+<html>

@@ -1,0 +1,64 @@
+html,body{
+height: 98%;
+}
+h1{
+margin: 0;
+padding: 0;
+font-family:"Droid Sans", sans-serif;
+font-size:30px;
+text-align:left;
+}
+body{
+color:#363032;
+text-align:left;
+font-family:"Droid Sans", sans-serif;
+font-size:11px;
+}
+canvas{
+	border:1px dotted #d3d3d3;
+}
+input.green{
+	background-color:lightgreen;
+	min-width: 50px;
+	width: 50px;
+}
+input.red{
+	background-color:pink;
+	min-width: 50px;
+	width: 50px;
+}
+table td
+{
+vertical-align:top;
+}
+table.center{
+	margin-left: auto;
+    margin-right: auto;
+	height: 100%;
+}
+.vertical{
+    transform:rotate(-90deg);
+    -moz-transform:rotate(-90deg);
+    -o-transform:rotate(-90deg);
+    -webkit-transform:rotate(-90deg);
+    -ms-transform:rotate(-90deg);
+}
+.app
+{
+	width: 300px;
+}
+div
+{
+	vertical-align: middle;
+	border: 1px solid gray;
+	border-collapse:collapse;
+	padding: 4px;
+	width: 95%;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius: 7px;
+}
+.nobox
+{
+	border: none;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='js/jquery-1.10.2.min.js'></script>
+<script>
+function updateGrid()
+{
+	var v = parseInt(document.getElementById('size').value);
+	var canvas=document.getElementById('myCanvas');
+	var ctx=canvas.getContext('2d');
+	canvas.width = canvas.width; //clear the canvas trick
+	for (x=0;x<canvas.width;x+=v)
+	{
+		for (y=0;y<canvas.width;y+=v)
+		{
+			ctx.rect(x,y,v,v);
+			if ($('#secondrect').is(':checked'))
+			{
+				ctx.rect(x,y,v+v/3,v+v/3);
+			}
+		}
+	}
+	ctx.stroke();
+	document.getElementById('out').innerHTML=v;
+}
+</script>
+</head>
+<body onload='updateGrid()'>
+<canvas id='myCanvas' width='800' height='800' style='border:1px dotted #d3d3d3;'>
+update your browser.</canvas>
+</br>
+<input type='range' id='size' min='10' max='800' value='100' step='1' onchange='updateGrid()'>
+<input type='checkbox' id='secondrect' checked='checked'/>
+</br>
+<span id='out'></span></br>
+<span id='out2'></span></br>
+<span id='out3'></span>
+</body>
+</html>

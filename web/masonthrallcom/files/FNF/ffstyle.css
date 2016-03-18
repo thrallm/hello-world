@@ -1,0 +1,16 @@
+p {font-size:14}
+li {list-style:square;font-size:17}
+body {background-color:4e0c07;font-family:"Bookman",san-serif;color:2f322a;font-size:14}
+h4 {text-align:center;color:764343;font-variant:small-caps;font-size:17}
+h6 {text-align:center;color:764343;font-variant:small-caps;font-size:50}
+table.container {border: 3px double gray;background-color:ffffff}
+img {background-color:ffffff}
+i {font-size:14}
+img.photo {width:110px;border-color:4e0c07}
+table.phototab {border:0px;text-align:center}
+td {text-align:center;font-size:17}
+td.right {text-align:right}
+div.good {font-family:"Bookman",serif;color:764343;font-variant:small-caps;text-align:center}
+div.goodclickable {font-family:"Bookman",serif;color:764343;font-variant:small-caps;cursor:pointer;font-size:17;text-align:right;width:130px;}
+hr {background:gray;height:1;border:0}
+ul {text-align:left}
