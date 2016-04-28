@@ -30,7 +30,7 @@
 			<td>
 				<h4>generation options</h4>
 				generation length (ms)
-				<input type='number' id='speed' value='50' min='1'/></br>
+				<input type='number' id='speed' value='1' min='1'/></br>
 				<span id='out'></span></br>
 				<h4>rule options</h4>
 				cells are <b>Born</b> if they have <input type='number' id='deadrule1' min='0' max='8' value='3'/> or
@@ -44,11 +44,11 @@
 				<select id='presets'>
 					<optgroup label='preset shapes'>
 						<option>blockLayingEngine</option>
-						<option selected='selected'>The R-pentomino</option>
+						<option>The R-pentomino</option>
 						<option>glider</option>
 						<option>toad</option>
 						<option>blinker</option>
-						<option>randomDisbersement</option>
+						<option selected='selected'>randomDisbersement</option>
 					</optgroup>
 				</select>
 				<input type='button' value='reset' id='reset'/>
