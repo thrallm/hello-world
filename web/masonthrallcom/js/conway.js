@@ -243,7 +243,7 @@ function playState(playing){
 function main(){
 	//vars
 	w = window;
-	w.heightadjust = $( w ).height() - 20;
+	w.heightadjust = $( w ).height() - 80;
 	w.widthadjust = $( w ).width() / 2;
 	$('#cellsize')[0].value = Math.round(w.heightadjust / 100)
 	w.canvas = $('#myCanvas')[0];
@@ -260,6 +260,10 @@ function main(){
 		};
 	})();
 	initGrid();
+	// run on load for more amazement
+	jQuery(function(){
+      jQuery('#play').click();
+    });
 }
 // run
 $( document ).ready(main());
