@@ -1,0 +1,39 @@
+body{
+	font-family: 'Josefin Sans', sans-serif;
+	color: #000;
+	background: #43C6DB;
+	background-size:100%;
+}
+a.nav-link:link
+{
+   color: #000;
+   text-decoration: none;
+}
+a.nav-link:visited
+{
+   color: #000;
+   text-decoration: none;
+}
+a.nav-link:hover
+{
+   color: #000;
+   text-decoration: none;
+}
+a.nav-link:active
+{
+   color: #000;
+   text-decoration: none;
+}
+.jumbotron{
+	background-color: #F3EFE0;
+}
+.btn{
+	color: #F3EFE0;
+	background: #DB5844;
+	border: #DB5844;
+	box-sizing: border-box;
+}
+.btn:hover{
+	background: #43C6DB;
+	border: #43C6DB;
+}
