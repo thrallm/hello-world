@@ -1,7 +1,7 @@
 body{
 	font-family: 'Josefin Sans', sans-serif;
 	color: #000;
-	background: #43C6DB;
+	background: #009aa7;
 	background-size:100%;
 }
 a.nav-link:link
@@ -34,6 +34,6 @@ a.nav-link:active
 	box-sizing: border-box;
 }
 .btn:hover{
-	background: #43C6DB;
-	border: #43C6DB;
+	background: #009aa7;
+	border: #009aa7;
 }
