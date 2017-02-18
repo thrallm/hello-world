@@ -19,30 +19,6 @@ function startMap(map_canvas,lat,lng) {
 	return map;
 }
 	
-	//shortcuts
-document.onkeyup=function(e) {
-	if(e.which == 65) document.getElementById('rotationstatus').innerHTML="up";
-	if(e.which == 68) document.getElementById('rotationstatus').innerHTML="up";
-}
-document.onkeydown=function(e) {
-	if(e.which == 65) {
-		var heading=map0.getHeading();
-		document.getElementById('rotationstatus').innerHTML=heading;
-		if (heading==null) {
-			var heading = 0;
-		}
-		map0.setHeading(heading+90);
-	}
-	if(e.which == 68) {
-		var heading=map0.getHeading();
-		document.getElementById('rotationstatus').innerHTML=heading;
-		if (heading==null) {
-			var heading = 0;
-		}
-		map0.setHeading(heading-90);
-	}
-}
-	
 function LinkMaps(map0, map1) {
 	google.maps.event.addListener(map0, 'zoom_changed', function() {
 		var newzoom = map0.getZoom();
@@ -81,6 +57,50 @@ function codeAddress(map,a) {
 	});
 }
 
-function switchListeners() {
+function switchListeners(map0, map1) {
+	google.maps.event.clearListeners(map0, 'zoom_changed');
+	google.maps.event.clearListeners(map0, 'maptypeid_changed');
+	google.maps.event.clearListeners(map0, 'heading_changed');
 	
+	google.maps.event.addListener(map1, 'zoom_changed', function() {
+		var newzoom = map1.getZoom();
+		document.getElementById('zoomlevel').innerHTML=newzoom;
+		map0.setZoom(newzoom);
+	});
+	google.maps.event.addListener(map1, 'maptypeid_changed', function() {
+		var x = map1.getMapTypeId();
+		map0.setMapTypeId(x);
+	});
+	google.maps.event.addListener(map1, 'heading_changed', function() {
+		var h = map1.getHeading();
+		map0.setHeading(h);
+	});
+}
+
+var geocoder;
+var map0;
+var map1;
+
+//shortcuts
+document.onkeyup=function(e) {
+	if(e.which == 65) document.getElementById('rotationstatus').innerHTML="up";
+	if(e.which == 68) document.getElementById('rotationstatus').innerHTML="up";
+}
+document.onkeydown=function(e) {
+	if(e.which == 65) {
+		var heading=map0.getHeading();
+		document.getElementById('rotationstatus').innerHTML=heading;
+		if (heading==null) {
+			var heading = 0;
+		}
+		map0.setHeading(heading+90);
+	}
+	if(e.which == 68) {
+		var heading=map0.getHeading();
+		document.getElementById('rotationstatus').innerHTML=heading;
+		if (heading==null) {
+			var heading = 0;
+		}
+		map0.setHeading(heading-90);
+	}
 }
