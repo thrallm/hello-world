@@ -4,38 +4,38 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
 	<link rel="stylesheet" type="text/css" href="css/scaletool.css"/>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCi8sodOVZyXx6B0urxvTy12AP1QJjNxT8&sensor=false"></script>
-    <script type="text/javascript" src="js/scaletool.js"></script>
-     <title>Scale Comparison Tool</title>
-     <script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-29507409-1']);
-	  _gaq.push(['_trackPageview']);
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCi8sodOVZyXx6B0urxvTy12AP1QJjNxT8"></script>
+	<script src="js/mapstyles.js"></script>
+    <script src="js/scaletool.js"></script>
+	<title>Scale Comparison Tool</title>
+	<script >
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-29507409-1']);
+		_gaq.push(['_trackPageview']);
 
-	  (function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
 	</script>
-  </head>
-  <body onload="initialize()">
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-    <div style="position:absolute; left: 0%; top: 0px" >
-    <h1>Scale Comparison Tool</h1>
-    <p>compare two map windows which stay at the same zoom level. use keys 1 and 2 for rotating oblique views <a href="../">back</a></p>
-    </div>
-    <div style="position:absolute; left: 0%; top: 55px" >
-    <input type="text" id="address0" onClick="" value="denver" />
-    <input type="button" onClick="codeAddress(map0,'address0')" value="go" />
-    </div>
-    <div style="position:absolute; left: 51%; top: 55px" >
-    <input type="text" id="address1" onClick="" value="paris" />
-    <input type="button" onClick="codeAddress(map1,'address1')" value="go" />
-    </div>
-    <div id='zoomlevel' style="position:absolute; left:97%; top: 0px">10</div>
-    <div id='rotationstatus' style="position:absolute; left:97%; top: 15px">test</div>
-    <div id="map_canvas0" style="position:absolute; left:0px; top:80px; width:49%; height:700px"></div>
-    <div id="map_canvas1" style="position:absolute; left:51%; top:80px; width:49%; height:700px"></div>
-  </body>
+	</head>
+	<body onload="setTimeout(function (){initialize()}, 100);" style="background-color:#302020;">
+		<div style="position:absolute; left: 0%; top: 0px" >
+		<h1>Scale Comparison Tool</h1>
+		<p>Compare two map windows which stay at the same zoom level. Use keys "a" and "d" for rotating oblique views <a href="../">back</a></p>
+		</div>
+		<div style="position:absolute; left: 0%; top: 55px" >
+			<input type="text" id="address0" onClick="" value="denver" />
+			<input type="button" onClick="codeAddress(map0,'address0')" value="go" />
+		</div>
+		<div style="position:absolute; left: 51%; top: 55px" >
+			<input type="text" id="address1" onClick="" value="paris" />
+			<input type="button" onClick="codeAddress(map1,'address1')" value="go" />
+		</div>
+		<div id='zoomlevel' style="position:float; left:100%; top: 0px">10</div>
+		<div id='rotationstatus' style="position:float; left:100%; top: 15px">test</div>
+		<div id="map_canvas0" style="position:absolute; left:0px; top:80px; width:49.9%; height:100%"></div>
+		<div id="map_canvas1" style="position:absolute; left:50.1%; top:80px; width:49.9%; height:100%"></div>
+	</body>
 </html>
