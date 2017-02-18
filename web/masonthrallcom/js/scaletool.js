@@ -22,11 +22,7 @@ function startMap(map_canvas,lat,lng) {
 function LinkMaps(map0, map1) {
 	google.maps.event.addListener(map0, 'mouseover', function() {
 		map0.master = true;
-		console.log(map0.master);
-	});
-	google.maps.event.addListener(map0, 'mouseout', function() {
-		map0.master = false;
-		console.log(map0.master);
+		map1.master = false;
 	});
 	google.maps.event.addListener(map0, 'zoom_changed', function() {
 		if (map0.master == true) {

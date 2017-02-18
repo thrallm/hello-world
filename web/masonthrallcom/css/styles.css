@@ -1,6 +1,10 @@
 html,body{
 height: 98%;
 }
+body {
+    background-image: url("/images/avatar.jpg");
+    background-repeat: repeat;
+}
 h1{
 margin: 0;
 padding: 0;
@@ -45,7 +49,8 @@ table.center{
 }
 .app
 {
-	width: 300px;
+	width: 95%;
+	background-color: white;
 }
 div
 {
