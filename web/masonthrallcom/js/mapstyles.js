@@ -1,6 +1,7 @@
 // mapstyles
 
 var man_color = "#302020";
+var man_color2 = "#352525";
 var nature_color = "#C0F572";
 var water_color = "#408080";
 
@@ -19,7 +20,7 @@ var ManAndNatureStyle = [
 		"featureType": "landscape.man_made",
 		"elementType": "geometry.fill",
 		"stylers": [
-			{ "color": man_color },
+			{ "color": man_color2 },
 			{ "visibility": "on" }
 		]
 	}, {
