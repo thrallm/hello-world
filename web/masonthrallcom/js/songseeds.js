@@ -108,7 +108,7 @@ function MakeSong(hz, seconds, notecount, songdata, maxchange, octavejump, divid
 			data[i] = sound;
 		}
 	}
-	DrawTree(w.generationcount, songcolor, sequence, octavejump);
+	//DrawTree(w.generationcount, songcolor, sequence, octavejump);
 	var trackname = chance.word({syllables: 1});
     wave.Make(data);
 	audio.name=trackname;
@@ -307,10 +307,10 @@ function Solo(audio, solobutton) {
 
 window.onload = function()
 {
-	var appcolor = chance.color({format: 'hex', grayscale: true});
-	appcolor = shadeColor2(appcolor, .70);
-	ToggleOptions($('#replace')[0].checked);
-	$('body').css({background: appcolor});
+	//var appcolor = chance.color({format: 'hex', grayscale: true});
+	//appcolor = shadeColor2(appcolor, .70);
+	//ToggleOptions($('#replace')[0].checked);
+	//$('body').css({background: appcolor});
 	var scalepicker = $('#scalepicker')[0];
 	_.each(scales, function(notes, name){
 		var el = document.createElement('option');

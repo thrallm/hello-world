@@ -1,22 +1,16 @@
-html,body{
-height: 98%;
-}
-body {
-    background-image: url("/images/avatar.jpg");
-    background-repeat: repeat;
-}
 h1{
-margin: 0;
-padding: 0;
-font-family:"Droid Sans", sans-serif;
-font-size:30px;
-text-align:left;
+	margin: 0;
+	padding: 0;
+	font-size:30px;
+	text-align:left;
 }
 body{
-color:#363032;
-text-align:left;
-font-family:"Droid Sans", sans-serif;
-font-size:11px;
+	background-image: url("/images/avatar.jpg");
+    background-repeat: repeat;
+	color:#363032;
+	text-align:left;
+	font-family:"Droid Sans", sans-serif;
+	font-size:11px;
 }
 canvas{
 	border:1px dotted #d3d3d3;
@@ -33,7 +27,7 @@ input.red{
 }
 table td
 {
-vertical-align:top;
+	vertical-align:top;
 }
 table.center{
 	margin-left: auto;
@@ -50,18 +44,19 @@ table.center{
 .app
 {
 	width: 95%;
+	height: 95%;
 	background-color: white;
 }
 div
 {
-	vertical-align: middle;
+	vertical-align: top;
 	border: 1px solid gray;
 	border-collapse:collapse;
 	padding: 4px;
 	width: 95%;
 	margin-left:auto;
 	margin-right:auto;
-	border-radius: 7px;
+	border-radius: 20px;
 }
 .nobox
 {
