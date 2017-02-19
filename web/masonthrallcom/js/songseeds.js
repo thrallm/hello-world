@@ -132,9 +132,9 @@ function MakeSong(hz, seconds, notecount, songdata, maxchange, octavejump, divid
 	songdata.prepend('<div id=' + trackname +
 					' style="background: ' + trackcolor + '" onclick="$(\'#' + trackname + 
 					'_details\').slideToggle();"><h4>voice: \"' + trackname + '\" : {generation: [' + 
-				    generationcount + ']}</h4></br>seed note:' + 
-				    Hz2Note(+hz) + '</br>note len(s):' +  seconds +
-				    '</br>loop len(s): ' + looplen + '</br>beats:' + notecount + 
+				    generationcount + ']}</h4></br>seed note: ' + 
+				    Hz2Note(+hz) + '</br>note len(s): ' +  seconds +
+				    '</br>loop len(s): ' + looplen + '</br>beats: ' + notecount + 
 				    '</br>maxchange: ' + maxchange +
 				    '</br>octavejump: ' + octavejump + '</div>' + 
 					'<div id="' + trackname + '_details" style="background: ' +
@@ -143,7 +143,7 @@ function MakeSong(hz, seconds, notecount, songdata, maxchange, octavejump, divid
 				    trackvolknobid + '" type="range" value="20" min="0" max="30"/>' +
 				    '<input type="button" id="' + trackname + '_mute" value="mute" onclick="Mute(\'' +
 					trackname + '\', this);"/><input type="button" id="' + trackname + '_solo" value="solo" onclick="Solo(\'' +
-					trackname + '\', this);"/></br>notes:' + sequence.join(',') +
+					trackname + '\', this);"/></br>notes: ' + sequence.join(',') +
 				    '<table><tr id="notechart">' + notediag.join('') + '</tr></table>' +
 				    '<canvas id=\"'+ trackname + '_stave\" width=\"' + availablewidth +
 				    '\" height="300"></canvas></div><br/>');

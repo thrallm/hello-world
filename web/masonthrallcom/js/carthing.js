@@ -24,13 +24,11 @@ function Car(){
 $(document).ready(function(){
 	var ctx = $('#d')[0].getContext("2d");
 	var c = new Car();
-	$('#b').click(function(){
-		c.makeCar();
-		setInterval(function() {
-		    c.moveCar();
-			draw(ctx, c);
-		}, 1);
-	});
+	c.makeCar();
+	setInterval(function() {
+		c.moveCar();
+		draw(ctx, c);
+	}, 1);
 	document.addEventListener('keydown', function(event){keyHandler(event,c)});
 });
 
