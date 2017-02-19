@@ -40,26 +40,27 @@ Evolve additional tracks which will compliment the initial seed when played toge
 There is no way to save (yet), so enjoy your temporary song.
 </div>
 <div id='seedoptions'>
-<input type='text' id='seed' value='c/4'/>note (note/octave)</br>
-<select id='scalepicker'><option>pick a scale</option></select></br>
-<b>seed options</b></br>
-<input type='number' id='notecount' value='4' min='1' max=''/>beats</br>
-<input type='number' id='seconds' min='0.0' max='4.0' step ='0.1' value='0.5'/>note length (seconds)</div>
+	<input type='text' id='seed' value='c/4'/>note (note/octave)</br>
+	<select id='scalepicker'><option>pick a scale</option></select></br>
+	<b>seed options</b></br>
+	<input type='number' id='notecount' value='4' min='1' max=''/>beats</br>
+	<input type='number' id='seconds' min='0.0' max='4.0' step ='0.1' value='0.5'/>note length (seconds)
+</div>
 <div class='nobox'>
-<input type='button' onclick='GenerateRiff()' class='genbutton' value='GenerateSeed' id='generatebutton'/>
-<input type='checkbox' checked id='replace' onchange='ToggleOptions(this.checked);'/>new seed
-<input type='range' id='maxchangehalfsteps' min='0' max='12' value='6'/>max halfstep change</br>
+	<input type='button' onclick='GenerateRiff()' class='genbutton' value='GenerateSeed' id='generatebutton'/>
+	<input type='checkbox' checked id='replace' onchange='ToggleOptions(this.checked);'/>new seed
+	<input type='range' id='maxchangehalfsteps' min='0' max='12' value='6'/>max halfstep change</br>
 </div>
 <div id='generationoptions'>
-<input type='number' id='octavejump' min='-8' max='8' value='0'/>octave jump 
-<input type='number' min='-1' max='1' step='1' id='pitchtrend' onchange='PlusTrend(this,"#octavejump");' value=1 />evolve higher or lower tones?</br>
-<b>generation options</b></br>
-<input type='number' id='divider' value='1' min='0.000' max='32.000' step='.0125'/>multiplier 
-<input type='number' min='-1' max='1' step='1' id='speedtrend' onchange='MultiplyTrend(this,"#divider");' value=1 />evolve longer or shorter notes?</br>
-<input type='number' id='notechance' value=.75 min=0 max=1 step=.125 />note chance</br>
-<input type='checkbox' id='walk' hidden/>
-<input type='button' class='genbutton' onclick='ContinualEvolve()' value='StopEvolving' id='continualevolve'/>
-<input type='number' id='lifetime' value=4 />evolution speed</br>
+	<input type='number' id='octavejump' min='-8' max='8' value='0'/>octave jump 
+	<input type='number' min='-1' max='1' step='1' id='pitchtrend' onchange='PlusTrend(this,"#octavejump");' value=1 />evolve higher or lower tones?</br>
+	<b>generation options</b></br>
+	<input type='number' id='divider' value='1' min='0.000' max='32.000' step='.0125'/>multiplier 
+	<input type='number' min='-1' max='1' step='1' id='speedtrend' onchange='MultiplyTrend(this,"#divider");' value=1 />evolve longer or shorter notes?</br>
+	<input type='number' id='notechance' value=.75 min=0 max=1 step=.125 />note chance</br>
+	<input type='checkbox' id='walk' hidden/>
+	<input type='button' class='genbutton' onclick='ContinualEvolve()' value='StopEvolving' id='continualevolve'/>
+	<input type='number' id='lifetime' value=4 />evolution speed</br>
 </div>
 </br>
 </div>

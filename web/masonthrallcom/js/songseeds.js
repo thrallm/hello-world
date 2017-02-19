@@ -129,30 +129,31 @@ function MakeSong(hz, seconds, notecount, songdata, maxchange, octavejump, divid
 	var trackstaveid = trackname + '_stave';
 	var trackvolknobid = trackname + '_volume';
 	//make the song div
-	songdata.prepend('<div onclick="$(\'#' + trackname + '\').slideToggle();" style="background: ' +
+	songdata.prepend('<div id=' + trackname +
+					' style="background: ' + trackcolor + '" onclick="$(\'#' + trackname + 
+					'_details\').slideToggle();"><h4>voice: \"' + trackname + '\" : {generation: [' + 
+				    generationcount + ']}</h4></br>seed note:' + 
+				    Hz2Note(+hz) + '</br>note len(s):' +  seconds +
+				    '</br>loop len(s): ' + looplen + '</br>beats:' + notecount + 
+				    '</br>maxchange: ' + maxchange +
+				    '</br>octavejump: ' + octavejump + '</div>' + 
+					'<div id="' + trackname + '_details" style="background: ' +
 				    trackcolor +
-				    '"><h4>voice: \"' + trackname + '\" : {generation: ['+ 
-				    generationcount + ']}</h4></br>volume <input class="volume" oninput="Volume();" id="' + 
+				    '" onclick="$(\'#' + trackname + '_details\').slideToggle();"></br>volume <input class="volume" oninput="Volume();" id="' + 
 				    trackvolknobid + '" type="range" value="20" min="0" max="30"/>' +
 				    '<input type="button" id="' + trackname + '_mute" value="mute" onclick="Mute(\'' +
 					trackname + '\', this);"/><input type="button" id="' + trackname + '_solo" value="solo" onclick="Solo(\'' +
 					trackname + '\', this);"/></br>notes:' + sequence.join(',') +
 				    '<table><tr id="notechart">' + notediag.join('') + '</tr></table>' +
 				    '<canvas id=\"'+ trackname + '_stave\" width=\"' + availablewidth +
-				    '\" height="300"></canvas></div><div onclick="$(\'#' + trackname + 
-					'\').slideToggle();" id=' + trackname +
-					' style="background: ' + trackcolor + '"><h4>details</h4></br>seed note:' + 
-				    Hz2Note(+hz) + '</br>note len(s):' +  seconds +
-				    '</br>loop len(s): ' + looplen + '</br>beats:' + notecount + 
-				    '</br>maxchange: ' + maxchange +
-				    '</br>octavejump: ' + octavejump + '</div></br>');
+				    '\" height="300"></canvas></div><br/>');
 	//try to make the stave
 	try{
 		sleep(0.5*generationcount);
 		var canvas = $('#' + trackstaveid)[0];
 		var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var ctx = renderer.getContext();
-		'#' + trackname + '_stave'
+		//'#' + trackname + '_stave'
 		var stave = new Vex.Flow.Stave(0, 100, $('#notechart').width()-1);
 		stave.addClef('treble').setContext(ctx).draw();
 		var notes = [];
@@ -176,7 +177,7 @@ function MakeSong(hz, seconds, notecount, songdata, maxchange, octavejump, divid
 	} catch(err) {
 		console.log('couldnt make stave' + err + 'generation:' + generationcount);
 	}
-	$('#' + trackname).slideToggle();
+	$('#' + trackname + '_details').slideToggle();
 	_.each($('.volume'), function(knob){
 		knob.value = knob.value * .75;
 	});
@@ -319,7 +320,7 @@ window.onload = function()
 		scalepicker.appendChild(el);
 	});
 	$('#scalepicker').val('Minor pentatonic scale')
-	$('#seedoptions').slideToggle();
+	$('#generationoptions').slideToggle();
 }
 function ToggleOptions(checked){
 	$('#seedoptions').slideToggle();
